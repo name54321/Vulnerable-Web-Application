@@ -9,9 +9,13 @@ pipeline {
         stage('Code Quality Check via SonarQube') {
             steps {
                 script {
-                    def scannerHome = tool name: 'SonarQubeScanner', type: 'SonarQubeScanner'
+                    def scannerHome = tool 'SonarQube'; // Ensure this name matches the SonarQube Scanner configuration
                     withSonarQubeEnv('SonarQube') {
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=OWASP -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.token=sqp_8a9afa7d1fd6a8da0a3ed20d5ae60aab45927d35"
+                        sh "${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=OWASP \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=http://localhost:9000 \
+                            -Dsonar.token=sqp_8a9afa7d1fd6a8da0a3ed20d5ae60aab45927d35"
                     }
                 }
             }
